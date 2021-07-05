@@ -25,7 +25,7 @@
             {
               "packager": "renesas-rx", 
               "version": "8.3.0.202102", 
-              "name": "rx-elf"
+              "name": "rx-elf-gcc"
             },
             {
               "packager": "renesas-rx", 
@@ -38,13 +38,13 @@
       "tools": [
         {
             "version": "8.3.0.202102",
-            "name": "rx-elf",
+            "name": "rx-elf-gcc",
             "systems": [
             {
               "host": "i686-mingw32",
               "url": "https://drive.google.com/u/0/uc?export=download&confirm=Wid7&id=1ZoriwYGh-mn5qByf9IH_9oluDYbBSmLU",
               "archiveFileName": "rx-elf.zip",
-              "checksum": "SHA-256:e24fad21d26c7f2a19f86ee1a3e13c3686d035c3346462254eef203e03bb9b39",
+              "checksum": "MD5:9e89dfb18774e877a3107f8e8b347d0d",
               "size": "608955068"
             }
             ]
