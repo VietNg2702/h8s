@@ -1,7 +1,7 @@
 h8s.name=H8S
 h8s.menu.toolsloc.default=Default
 h8s.menu.toolsloc.manual=Manual
-h8s.menu.toolsloc.default.compiler.path={runtime.tools.rx-elf-gcc.path}/"8.3.0.202102"/bin/
+h8s.menu.toolsloc.default.compiler.path={runtime.tools.rx-elf-gcc.path}/bin/
 h8s.menu.toolsloc.manual.compiler.path=
 
 h8s.build.variant=standard

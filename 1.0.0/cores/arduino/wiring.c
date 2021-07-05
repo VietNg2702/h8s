@@ -26,6 +26,8 @@
  */
 
 #include "Arduino.h"
+#include "wiring.h"
+#include <machine.h>
 
 /* Set to ensure base delay of 1mS minimum */
 #define DELAY_TIMING	0x2F

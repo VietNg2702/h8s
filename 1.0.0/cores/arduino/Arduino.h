@@ -34,11 +34,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include "system_RE01_256KB.h"
 #include "wiring.h"
 #include "wiring_constants.h"
-#include "wiring_i2c.h"
-#include "wiring_spi.h"
 
 #define clockCyclesPerMicrosecond() ( SystemCoreClock / 1000000L )
 #define clockCyclesToMicroseconds(a) ( ((a) * 1000L) / (SystemCoreClock / 1000L) )

@@ -2,7 +2,7 @@ name=EK-RE01-256KB
 version=1.0.0
 
 # Compile tool path
-compiler.path={runtime.tools.rx-elf-gcc.path}/"8.3.0.202102"/bin/
+compiler.path={runtime.tools.rx-elf-gcc.path}/bin/
 
 # Compile s files options
 compiler.S.cmd=rx-elf-gcc
@@ -10,18 +10,18 @@ compiler.S.flags=-c -g -x assembler-with-cpp
 
 # Compile c files options
 compiler.c.cmd=rx-elf-gcc
-compiler.c.flags=-std=gnu11 --specs=nosys.specs -mcpu=cortex-m0plus -march=armv6-m -mthumb -mlittle-endian -mfloat-abi=soft -O2 -fmessage-length=0 -fsigned-char -ffunction-sections -g -Wno-narrowing
+compiler.c.flags=-mcpu=rx610 -mlittle-endian-data
 
 # Compile cpp files options
 compiler.cpp.cmd=rx-elf-g++
-compiler.cpp.flags=-std=gnu++11 --specs=nosys.specs -mcpu=cortex-m0plus -march=armv6-m -mthumb -mlittle-endian -mfloat-abi=soft -O2 -fmessage-length=0 -fsigned-char -ffunction-sections -g -Wno-narrowing
+compiler.cpp.flags=-mcpu=rx610 -mlittle-endian-data
 
 # Compile includes
-compiler.re01_include="-I{build.system.path}/include" "-I{runtime.platform.path}/variants/standard" "-I{runtime.platform.path}/cores/arduino" "-I{runtime.platform.path}/cores/arduino/avr" "-I{runtime.platform.path}/cores/arduino/re01_256kb" "-I{runtime.platform.path}/cores/arduino/re01_256kb/CMSIS/Core/Include" "-I{runtime.platform.path}/cores/arduino/re01_256kb/CMSIS/Driver/Include" "-I{runtime.platform.path}/cores/arduino/re01_256kb/CMSIS/DSP_Lib/Include" "-I{runtime.platform.path}/cores/arduino/re01_256kb/config" "-I{runtime.platform.path}/cores/arduino/re01_256kb/Device" "-I{runtime.platform.path}/cores/arduino/re01_256kb/Device/CMSIS_Driver/Include" "-I{runtime.platform.path}/cores/arduino/re01_256kb/Device/Config" "-I{runtime.platform.path}/cores/arduino/re01_256kb/Device/Driver" "-I{runtime.platform.path}/cores/arduino/re01_256kb/Device/Driver/Include" 
+compiler.h8s_include="-I{build.system.path}/include" "-I{runtime.platform.path}/variants/standard" "-I{runtime.platform.path}/cores/arduino" "-I{runtime.platform.path}/cores/arduino/avr" "-I{runtime.platform.path}/cores/arduino/h8s" 
 
 # Create archives options
 compiler.ar.cmd=rx-elf-ar
-compiler.ar.flags=rcs
+compiler.ar.flags=
 archive_file_path={build.path}/{archive_file}
 
 # Combine to create elf file options
@@ -40,16 +40,16 @@ compiler.size.cmd=rx-elf-size
 
 # Compile linkscript
 compiler.ld.cmd=rx-elf-ld
-compiler.ld.flags=--specs=nosys.specs -mcpu=cortex-m0plus -march=armv6-m -mthumb -mlittle-endian -mfloat-abi=soft -O2 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wno-narrowing -g -T "{runtime.platform.path}/cores/arduino/re01_256kb/script/RE01_256KB.ld"
+compiler.ld.flags=-mcpu=rx610 -mlittle-endian-data
 
 # Compile c files
-recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} {compiler.re01_include} {includes} "{source_file}" -c -o "{object_file}"
+recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} {compiler.h8s_include} {includes} "{source_file}" -c -o "{object_file}"
 
 # Compile c++ files
-recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} {compiler.re01_include} {includes} "{source_file}" -c -o "{object_file}"
+recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} {compiler.h8s_include} {includes} "{source_file}" -c -o "{object_file}"
 
 # Compile S files
-recipe.S.o.pattern="{compiler.path}{compiler.S.cmd}" {compiler.S.flags} {compiler.re01_include} {includes} "{source_file}" -c -o "{object_file}"
+recipe.S.o.pattern="{compiler.path}{compiler.S.cmd}" {compiler.S.flags} {compiler.h8s_include} {includes} "{source_file}" -c -o "{object_file}"
 
 # Create archives
 recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} "{archive_file_path}" "{object_file}"

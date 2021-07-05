@@ -27,24 +27,7 @@
  */
 void attachInterrupt(uint32_t pin, interrupt_handle_t callback, interrupt_mode_t mode)
 {
-    /* Set the IRQ sense register	*/
-	INTC.ISCR.WORD = 0x0051;
-
-    /* Configure priority of IRQ1 and IRQ2 interrupts. */
-	INTC.IPRB.BIT._IRQ23 = 0x01;
-
-    /* Enable required IRQ1 and IRQ2 interrupt requests. */
-	INTC.IER.BIT.IRQ2E = 1;
-
-    /* Clear the interrupt flags	*/
-	INTC.ISR.BYTE = SET_BYTE_LOW;
-
-	/* Select interrupt control mode 2 to set the user defined interrupt priorities. */
-	SYSCR.BIT.INTM = 2;
     
-    /* Allow interrupts	 */
-	set_imask_ccr((unsigned char)0);
-	set_imask_exr((unsigned char)0);
 }
 
 /*

@@ -16,16 +16,16 @@
           "category": "renesas rx family",
           "url": "https://github.com/VietNg2702/h8s/raw/master/h8s_100.zip",
           "archiveFileName": "h8s_100.zip",
-          "checksum": "SHA-256:38c73e7dafbc8a4262a2586faab8e342102f37cf4b1d96a35753fe70a8c0622e",
-          "size": "180939",
+          "checksum": "SHA-256:691c58073c2b215e6e5227c83a501acd1ee4c2b287efae3f94987a7c802c3081",
+          "size": "178029",
           "boards": [
             {"name": "H8S"}
           ],
           "toolsDependencies": [
             {
               "packager": "renesas-rx", 
-              "version": "8.3.0.202102", 
-              "name": "rx-elf-gcc"
+              "version": "7-0-0", 
+              "name": "hew"
             },
             {
               "packager": "renesas-rx", 
@@ -37,15 +37,15 @@
         ],
       "tools": [
         {
-            "version": "8.3.0.202102",
-            "name": "rx-elf-gcc",
+            "version": "7-0-0",
+            "name": "hew",
             "systems": [
             {
               "host": "i686-mingw32",
-              "url": "https://drive.google.com/u/0/uc?export=download&confirm=Wid7&id=1ZoriwYGh-mn5qByf9IH_9oluDYbBSmLU",
-              "archiveFileName": "rx-elf.zip",
-              "checksum": "SHA-256:e24fad21d26c7f2a19f86ee1a3e13c3686d035c3346462254eef203e03bb9b39",
-              "size": "608955068"
+              "url": "https://drive.google.com/u/0/uc?id=1uoD1uS4y5UDptwf6lm-XS2XwRG7BnjtT&export=download",
+              "archiveFileName": "hew.zip",
+              "checksum": "SHA-256:2cd9c1f3f945793317542ea5ea26a8fbecf50a3022d3ac273c05a0ae19dee9a4",
+              "size": "10120362"
             }
             ]
         },
