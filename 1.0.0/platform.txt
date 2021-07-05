@@ -1,0 +1,93 @@
+name=EK-RE01-256KB
+version=1.0.0
+
+# Compile tool path
+compiler.path={runtime.tools.rx-elf.path}/bin/
+
+# Compile s files options
+compiler.S.cmd=rx-elf-gcc
+compiler.S.flags=-c -g -x assembler-with-cpp 
+
+# Compile c files options
+compiler.c.cmd=rx-elf-gcc
+compiler.c.flags=-std=gnu11 --specs=nosys.specs -mcpu=cortex-m0plus -march=armv6-m -mthumb -mlittle-endian -mfloat-abi=soft -O2 -fmessage-length=0 -fsigned-char -ffunction-sections -g -Wno-narrowing
+
+# Compile cpp files options
+compiler.cpp.cmd=rx-elf-g++
+compiler.cpp.flags=-std=gnu++11 --specs=nosys.specs -mcpu=cortex-m0plus -march=armv6-m -mthumb -mlittle-endian -mfloat-abi=soft -O2 -fmessage-length=0 -fsigned-char -ffunction-sections -g -Wno-narrowing
+
+# Compile includes
+compiler.re01_include="-I{build.system.path}/include" "-I{runtime.platform.path}/variants/standard" "-I{runtime.platform.path}/cores/arduino" "-I{runtime.platform.path}/cores/arduino/avr" "-I{runtime.platform.path}/cores/arduino/re01_256kb" "-I{runtime.platform.path}/cores/arduino/re01_256kb/CMSIS/Core/Include" "-I{runtime.platform.path}/cores/arduino/re01_256kb/CMSIS/Driver/Include" "-I{runtime.platform.path}/cores/arduino/re01_256kb/CMSIS/DSP_Lib/Include" "-I{runtime.platform.path}/cores/arduino/re01_256kb/config" "-I{runtime.platform.path}/cores/arduino/re01_256kb/Device" "-I{runtime.platform.path}/cores/arduino/re01_256kb/Device/CMSIS_Driver/Include" "-I{runtime.platform.path}/cores/arduino/re01_256kb/Device/Config" "-I{runtime.platform.path}/cores/arduino/re01_256kb/Device/Driver" "-I{runtime.platform.path}/cores/arduino/re01_256kb/Device/Driver/Include" 
+
+# Create archives options
+compiler.ar.cmd=rx-elf-ar
+compiler.ar.flags=rcs
+archive_file_path={build.path}/{archive_file}
+
+# Combine to create elf file options
+compiler.c.elf.cmd=rx-elf-g++
+
+# Create bin file options
+compiler.elf2bin.cmd=rx-elf-objcopy
+compiler.elf2bin.flags=-O binary
+
+# Create hex file options
+compiler.elf2hex.cmd=rx-elf-objcopy
+compiler.elf2hex.flags=-O ihex
+
+# Calculate hex size options
+compiler.size.cmd=rx-elf-size
+
+# Compile linkscript
+compiler.ld.cmd=rx-elf-ld
+compiler.ld.flags=--specs=nosys.specs -mcpu=cortex-m0plus -march=armv6-m -mthumb -mlittle-endian -mfloat-abi=soft -O2 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wno-narrowing -g -T "{runtime.platform.path}/cores/arduino/re01_256kb/script/RE01_256KB.ld"
+
+# Compile c files
+recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} {compiler.re01_include} {includes} "{source_file}" -c -o "{object_file}"
+
+# Compile c++ files
+recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} {compiler.re01_include} {includes} "{source_file}" -c -o "{object_file}"
+
+# Compile S files
+recipe.S.o.pattern="{compiler.path}{compiler.S.cmd}" {compiler.S.flags} {compiler.re01_include} {includes} "{source_file}" -c -o "{object_file}"
+
+# Create archives
+recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} "{archive_file_path}" "{object_file}"
+
+# Combine gc-sections, archives, and objects
+recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}"  {compiler.ld.flags} -Xlinker --gc-sections -Wl,-Map={build.path}/{build.project_name}.map -o "{build.path}/{build.project_name}.elf" "-L{build.path}/{archive_file}" -Wl,--warn-common {object_files} "{archive_file_path}"
+
+# Create bin
+recipe.objcopy.eep.pattern="{compiler.path}{compiler.elf2bin.cmd}" {compiler.elf2bin.flags} "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
+
+## Create hex
+recipe.objcopy.hex.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf2hex.flags} "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
+
+
+# Compute size
+recipe.size.pattern="{compiler.path}{compiler.size.cmd}" --format=berkeley "{build.path}/{build.project_name}.elf"
+
+
+# Uploader tools
+# -------------------
+tools.openocd.path={runtime.tools.openocd.path}/bin/
+tools.openocd.cmd=openocd
+tools.openocd.program.params.verbose=-v
+tools.openocd.program.params.quiet=-q
+tools.openocd.program.config={runtime.platform.path}/tools/openocd/openocd.cfg
+tools.openocd.program.pattern="{path}{cmd}" -f {program.config} -c "flash protect 0 64 last off; program {build.path}/{build.project_name}.elf verify; resume 0x20400000; exit"
+
+tools.openocd.erase.params.quiet=-q -q
+tools.openocd.erase.params.verbose=-v
+tools.openocd.erase.pattern=
+tools.openocd.bootloader.params.quiet=-q -q
+tools.openocd.bootloader.params.verbose=-v
+tools.openocd.bootloader.config={runtime.platform.path}/tools/openocd/openocd.cfg
+tools.openocd.bootloader.pattern="{path}{cmd}" -f {bootloader.config} -c "flash protect 0 64 last off; program {runtime.platform.path}/bootloader/build/re01_256kb_ek_bootloader.hex verify; resume 0x20400000; exit"
+
+tools.manual_openocd.path=
+tools.manual_openocd.cmd=openocd
+tools.manual_openocd.program.params.verbose=-v
+tools.manual_openocd.program.params.quiet=-q
+tools.manual_openocd.program.config={runtime.platform.path}/tools/openocd/openocd.cfg
+tools.manual_openocd.program.pattern="{path}{cmd}" -f {program.config} -c "flash protect 0 64 last off; program {build.path}/{build.project_name}.elf verify; resume 0x20400000; exit"

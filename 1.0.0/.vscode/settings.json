@@ -1,0 +1,21 @@
+{
+    "files.associations": {
+        "pin.h": "c",
+        "arduino.h": "c",
+        "hardwareserial.h": "c",
+        "wstring.h": "c",
+        "wiring_pulse.h": "c",
+        "winterrupts.h": "c",
+        "variant.h": "c",
+        "wiring.h": "c",
+        "pins_arduino.h": "c",
+        "wiring_digital.h": "c",
+        "r_dtc_api.h": "c",
+        "hdc2010.h": "c",
+        "config_mode.h": "c",
+        "lr1110_user_config_io.h": "c",
+        "lr1110_user_config_mode.h": "c",
+        "touch.h": "c",
+        "configuration.h": "c"
+    }
+}

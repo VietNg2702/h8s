@@ -1,0 +1,21 @@
+ek_re01_256kb.name=H8S
+ek_re01_256kb.menu.toolsloc.default=Default
+ek_re01_256kb.menu.toolsloc.manual=Manual
+ek_re01_256kb.menu.toolsloc.default.compiler.path={runtime.tools.rx-elf.path}/bin/
+ek_re01_256kb.menu.toolsloc.manual.compiler.path=
+
+ek_re01_256kb.build.variant=standard
+ek_re01_256kb.build.core=arduino
+ek_re01_256kb.build.board=H8S
+ek_re01_256kb.build.boardenv=H8S
+
+ek_re01_256kb.upload.tool=avrdude
+ek_re01_256kb.upload.protocol=avrisp
+ek_re01_256kb.upload.speed=115200
+
+ek_re01_256kb.bootloader.tool=openocd
+
+# Limit is the 64KB
+ek_re01_256kb.upload.maximum_size=65536
+#ek_re01_256kb.build.ldscript
+#ek_re01_256kb.build.openocdcfg
