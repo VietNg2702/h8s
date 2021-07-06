@@ -24,8 +24,8 @@
           "toolsDependencies": [
             {
               "packager": "renesas-rx", 
-              "version": "7-0-0", 
-              "name": "hew"
+              "version": "8.3.0.202102", 
+              "name": "rx-elf"
             },
             {
               "packager": "renesas-rx", 
@@ -37,15 +37,15 @@
         ],
       "tools": [
         {
-            "version": "7-0-0",
-            "name": "hew",
+            "version": "8.3.0.202102",
+            "name": "rx-elf",
             "systems": [
             {
               "host": "i686-mingw32",
-              "url": "https://drive.google.com/u/0/uc?id=1-_beDtJ2EC2WI8BgaDOHJVKFvpz-8QWM&export=download",
-              "archiveFileName": "hew.zip",
-              "checksum": "SHA-256:0ac7de040726a72ed11183ceacb6887f42d373f7c8a931bc665a9d39f8069a5e",
-              "size": "10121530"
+              "url": "https://drive.google.com/u/0/uc?export=download&confirm=yAAv&id=1ZoriwYGh-mn5qByf9IH_9oluDYbBSmLU",
+              "archiveFileName": "rx-elf.zip",
+              "checksum": "SHA-256:e24fad21d26c7f2a19f86ee1a3e13c3686d035c3346462254eef203e03bb9b39",
+              "size": "608955068"
             }
             ]
         },
