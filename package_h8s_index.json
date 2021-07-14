@@ -24,8 +24,8 @@
           "toolsDependencies": [
             {
               "packager": "renesas-rx", 
-              "version": "8.3.0.202102", 
-              "name": "rx-elf"
+              "version": "v0902", 
+              "name": "gnuh8-elf"
             },
             {
               "packager": "renesas-rx", 
@@ -37,15 +37,15 @@
         ],
       "tools": [
         {
-            "version": "8.3.0.202102",
-            "name": "rx-elf",
+            "version": "v0902",
+            "name": "gnuh8-elf",
             "systems": [
             {
               "host": "i686-mingw32",
-              "url": "https://drive.google.com/u/0/uc?export=download&confirm=yAAv&id=1ZoriwYGh-mn5qByf9IH_9oluDYbBSmLU",
-              "archiveFileName": "rx-elf.zip",
-              "checksum": "SHA-256:e24fad21d26c7f2a19f86ee1a3e13c3686d035c3346462254eef203e03bb9b39",
-              "size": "608955068"
+              "url": "https://github.com/VietNg2702/h8s/raw/master/GNUH8-ELF.zip",
+              "archiveFileName": "GNUH8-ELF.zip",
+              "checksum": "SHA-256:a7cb108b23cfc8483baddb22811140535d52d4f8b5bfae35b8ecffb66d75ffb1",
+              "size": "51285447"
             }
             ]
         },

@@ -28,7 +28,6 @@
 
 #include <avr/pgmspace.h>
 
-#include "binary.h"
 #include "pins_arduino.h"
 
 #ifdef __cplusplus

@@ -1,0 +1,140 @@
+// H8S,H8/300 SERIES C/C++ Compiler Ver. 7.0
+// Embedded C++ Library
+// Copyright (C) 1994,2007 Renesas Technology Corp. and Renesas Solutions Corp.
+// Copyright (C) 2000 Hitachi, Ltd.
+// Copyright (C) 1994,2007 Hitachi Information & Control Solutions, Ltd.
+// All rights reserved.
+
+//
+//  Embeded C++ Library <streambuf> 
+//
+
+//====================================================================
+//  File:	streambuf
+//  Purpose:	Definition of class streambuf
+//  Create:     1997.09.20 Rev. 1.0
+//====================================================================
+
+#ifndef _STREAMBUF_
+#define _STREAMBUF_
+
+#include <ios>
+#pragma pack 2
+class streambuf {
+public:
+	virtual ~streambuf(){}
+	streambuf *pubsetbuf(char *cptr, streamsize nnum){
+		return setbuf(cptr, nnum);
+	}
+	pos_type pubseekoff(off_type off,ios_base::seekdir way,
+				ios_base::openmode which
+					=(ios_base::openmode)
+					(ios_base::in|ios_base::out)){
+		return seekoff(off, way, which);
+	}
+	pos_type pubseekpos(pos_type sp,
+				ios_base::openmode which
+					=(ios_base::openmode)
+					(ios_base::in|ios_base::out)){
+		return seekpos(sp, which);
+	}
+	int pubsync(){
+		return sync();
+	}
+	streamsize in_avail(){
+		return ((gptr()!=0)&&(gptr()<egptr()) ? 
+                       egptr()-gptr(): showmanyc());
+	}
+	int_type snextc() {return ((sbumpc()==eof) ? eof:sgetc());}
+	int_type sbumpc();
+	int_type sgetc();
+	streamsize sgetn(char* cptr, streamsize nnum) {return xsgetn( cptr, nnum);}
+	int_type sputbackc(char);
+	int sungetc();
+	int sputc(char);
+	streamsize sputn(const char *cptr, streamsize nnum)
+		{return xsputn( cptr, nnum);}
+	enum {eof=-1};
+protected:
+	streambuf();
+	char *eback() const {return *B_beg_pptr;}
+	char *gptr() const {return *B_next_pptr;}
+#ifdef _STDIO_C99
+	char *egptr() const {return *B_cnt_pptr;}
+	char *rbkptr() const {return *B_rback_pptr;}
+	char *bkptr() const {return B_back_ptr;}
+#else
+	char *egptr() const {return (*B_next_pptr+(*_B_cnt_ptr));}
+#endif
+	void gbump(streamsize nptr);
+	void setg(char *gbeg, char *gnext, char *gend)
+		{*B_beg_pptr = gbeg;*B_next_pptr = gnext;B_end_ptr = gend;
+#ifdef _STDIO_C99
+ 			*B_cnt_pptr=gend;*B_len_pptr=gend;}
+#else
+			*_B_cnt_ptr=gend-gnext;*_B_len_ptr=gend-gbeg;}
+#endif
+	char *pbase() const {return *B_beg_pptr;}
+	char *pptr() const {return *B_next_pptr;}
+#ifdef _STDIO_C99
+	char *epptr() const {return *B_len_pptr;}
+	short *_ec2p_getflag() const { return ((short*)C_flg_ptr);}
+#else
+	char *epptr() const {return (*B_beg_pptr+(*_B_len_ptr));}
+	char *_ec2p_getflag() const { return ((char*)C_flg_ptr);}
+#endif
+
+	void pbump(streamsize nptr);
+	void setp(char *pbeg, char *pend)
+		{*B_beg_pptr = pbeg;*B_next_pptr = pbeg;B_end_ptr = pend;
+#ifdef _STDIO_C99
+ 			*B_cnt_pptr=pend;*B_len_pptr=pend;}
+#else
+			*_B_cnt_ptr=pend-pbeg;*_B_len_ptr=pend-pbeg;}
+#endif
+
+	virtual streambuf *setbuf(char *, streamsize){ return this; }
+	virtual pos_type seekoff(off_type, ios_base::seekdir,
+        		ios_base::openmode=(ios_base::openmode)
+			(ios_base::in|ios_base::out)){ return -1; }
+	virtual pos_type seekpos(pos_type, ios_base::openmode=
+			(ios_base::openmode)(ios_base::in|ios_base::out)){
+			return -1; }
+	virtual int sync(){ return 0; }
+	virtual int showmanyc(){ return 0; }
+	virtual streamsize xsgetn(char *, streamsize);
+	virtual int_type underflow(){ return eof; }
+	virtual int_type uflow();
+	virtual int_type pbackfail(int_type=eof){ return eof; }
+	virtual streamsize xsputn(const char *, streamsize);
+	virtual int_type overflow(int_type=eof){ return eof; }
+	char *& _ec2p_gnptr(){ return (char *&)*B_next_pptr;}
+	char *& _ec2p_pnptr(){ return (char *&)*B_next_pptr;}
+
+#ifdef _STDIO_C99
+	char *& _ec2p_rbkptr(){ return (char *&)*B_rback_pptr;}
+	void _ec2p_bcntplus(){(*B_cnt_pptr);}
+	void _ec2p_bcntminus(){(*B_cnt_pptr);}
+	void _ec2p_setbPtr(char**, char**, char**, char**, short*, char**, char*);
+#else
+	void _ec2p_bcntplus(){(*_B_cnt_ptr)++;}
+	void _ec2p_bcntminus(){(*_B_cnt_ptr)--;}
+	void _ec2p_setbPtr(char**, char**, long*, long*,char*);
+#endif
+
+private:
+	long *_B_cnt_ptr, *_B_len_ptr;
+	char *B_beg_ptr, *B_next_ptr, *B_end_ptr;
+	char **B_beg_pptr, **B_next_pptr;
+#ifdef _STDIO_C99
+	char **B_cnt_pptr, **B_len_pptr;
+	short *C_flg_ptr;
+	char **B_rback_pptr;
+	char *B_back_ptr;
+#else
+	char *C_flg_ptr;
+#endif
+};
+#pragma unpack
+
+#endif

@@ -2,7 +2,7 @@ name=EK-RE01-256KB
 version=1.0.0
 
 # Compile tool path
-compiler.path={runtime.tools.rx-elf-gcc.path}/bin/
+compiler.path={runtime.tools.rx-elf.path}/bin/
 
 # Compile s files options
 compiler.S.cmd=rx-elf-gcc
@@ -10,14 +10,15 @@ compiler.S.flags=-c -g -x assembler-with-cpp
 
 # Compile c files options
 compiler.c.cmd=rx-elf-gcc
-compiler.c.flags=-mcpu=rx610 -mlittle-endian-data
+compiler.c.flags=-std=c99 -mlittle-endian-data -nostartfiles -Wimplicit-function-declaration -Woverflow -Wbuiltin-declaration-mismatch -Wpragmas -D__H8__
 
 # Compile cpp files options
 compiler.cpp.cmd=rx-elf-g++
-compiler.cpp.flags=-mcpu=rx610 -mlittle-endian-data
+compiler.cpp.flags=-std=c++98 -mlittle-endian-data -nostartfiles -D__STDC_VERSION__=199901L -D__H8__ -Woverflow -Wbuiltin-declaration-mismatch
 
 # Compile includes
-compiler.h8s_include="-I{build.system.path}/include" "-I{runtime.platform.path}/variants/standard" "-I{runtime.platform.path}/cores/arduino" "-I{runtime.platform.path}/cores/arduino/avr" "-I{runtime.platform.path}/cores/arduino/h8s" 
+compiler.h8s_c_include="-I{build.system.path}/include" "-I{runtime.platform.path}/variants/standard" "-I{runtime.platform.path}/cores/arduino" "-I{runtime.platform.path}/cores/arduino/avr" "-I{runtime.platform.path}/cores/arduino/h8s" "-I{runtime.platform.path}/cores/arduino/h8s/include" "-I{runtime.platform.path}/cores/arduino/h8s/include/C99"
+compiler.h8s_cplusplus_include="-I{build.system.path}/include" "-I{runtime.platform.path}/variants/standard" "-I{runtime.platform.path}/cores/arduino" "-I{runtime.platform.path}/cores/arduino/avr" "-I{runtime.platform.path}/cores/arduino/h8s" "-I{runtime.platform.path}/cores/arduino/h8s/include"
 
 # Create archives options
 compiler.ar.cmd=rx-elf-ar
@@ -40,13 +41,13 @@ compiler.size.cmd=rx-elf-size
 
 # Compile linkscript
 compiler.ld.cmd=rx-elf-ld
-compiler.ld.flags=-mcpu=rx610 -mlittle-endian-data
+compiler.ld.flags=-ms -mlittle-endian-data
 
 # Compile c files
-recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} {compiler.h8s_include} {includes} "{source_file}" -c -o "{object_file}"
+recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} {compiler.h8s_c_include} {includes} "{source_file}" -c -o "{object_file}"
 
 # Compile c++ files
-recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} {compiler.h8s_include} {includes} "{source_file}" -c -o "{object_file}"
+recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} {compiler.h8s_cplusplus_include} {includes} "{source_file}" -c -o "{object_file}"
 
 # Compile S files
 recipe.S.o.pattern="{compiler.path}{compiler.S.cmd}" {compiler.S.flags} {compiler.h8s_include} {includes} "{source_file}" -c -o "{object_file}"
