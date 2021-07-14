@@ -1,56 +1,59 @@
-name=EK-RE01-256KB
+name=H8S
 version=1.0.0
 
 # Compile tool path
-compiler.path={runtime.tools.rx-elf.path}/bin/
+compiler.path={runtime.tools.gnuh8-elf.path}/v0902/h8300-elf/bin/
 
 # Compile s files options
-compiler.S.cmd=rx-elf-gcc
-compiler.S.flags=-c -g -x assembler-with-cpp 
+compiler.S.cmd=h8300-elf-as
+compiler.S.flags=-D RELEASE -ms -Os -fno-function-cse -funit-at-a-time -falign-jumps -fdata-sections -ffunction-sections -nostdinc
 
 # Compile c files options
-compiler.c.cmd=rx-elf-gcc
-compiler.c.flags=-std=c99 -mlittle-endian-data -nostartfiles -Wimplicit-function-declaration -Woverflow -Wbuiltin-declaration-mismatch -Wpragmas -D__H8__
+compiler.c.cmd=h8300-elf-gcc
+compiler.c.flags=-D RELEASE -ms -Os -fno-function-cse -funit-at-a-time -falign-jumps -fdata-sections -ffunction-sections -nostdinc
 
 # Compile cpp files options
-compiler.cpp.cmd=rx-elf-g++
-compiler.cpp.flags=-std=c++98 -mlittle-endian-data -nostartfiles -D__STDC_VERSION__=199901L -D__H8__ -Woverflow -Wbuiltin-declaration-mismatch
+compiler.cpp.cmd=h8300-elf-c++
+compiler.cpp.flags=-D RELEASE -ms -Os -fno-function-cse -funit-at-a-time -falign-jumps -fdata-sections -ffunction-sections -nostdinc
 
 # Compile includes
-compiler.h8s_c_include="-I{build.system.path}/include" "-I{runtime.platform.path}/variants/standard" "-I{runtime.platform.path}/cores/arduino" "-I{runtime.platform.path}/cores/arduino/avr" "-I{runtime.platform.path}/cores/arduino/h8s" "-I{runtime.platform.path}/cores/arduino/h8s/include" "-I{runtime.platform.path}/cores/arduino/h8s/include/C99"
-compiler.h8s_cplusplus_include="-I{build.system.path}/include" "-I{runtime.platform.path}/variants/standard" "-I{runtime.platform.path}/cores/arduino" "-I{runtime.platform.path}/cores/arduino/avr" "-I{runtime.platform.path}/cores/arduino/h8s" "-I{runtime.platform.path}/cores/arduino/h8s/include"
+compiler.h8s_include="-I{build.system.path}/include" "-I{runtime.platform.path}/variants/standard" "-I{runtime.platform.path}/cores/arduino" "-I{runtime.platform.path}/cores/arduino/avr" "-I{runtime.platform.path}/cores/arduino/h8s" 
+compiler.h8300_include="-I{runtime.tools.gnuh8-elf.path}/v0902/h8300-elf/h8300-elf/include" "-I{runtime.tools.gnuh8-elf.path}/v0902/h8300-elf/lib/gcc/h8300-elf/4.3-GNUH8_v0902/include" "-I{runtime.tools.gnuh8-elf.path}/v0902/h8300-elf/h8300-elf/optlibinc" "-I{runtime.tools.gnuh8-elf.path}/v0902/h8300-elf/lib/gcc/h8300-elf/4.3-GNUH8_v0902/optlibinc"
 
 # Create archives options
-compiler.ar.cmd=rx-elf-ar
-compiler.ar.flags=
+compiler.ar.cmd=h8300-elf-ar
+compiler.ar.flags=srec
+#--compiler-options=-ms -Os -fdata-sections -ffunction-sections -falign-jumps -fno-function-cse -funit-at-a-time --select-lib=optlib --header-files=stdio,stdlib,string
+
+#Archive include
 archive_file_path={build.path}/{archive_file}
 
 # Combine to create elf file options
-compiler.c.elf.cmd=rx-elf-g++
+compiler.c.elf.cmd=h8300-elf-g++
 
 # Create bin file options
-compiler.elf2bin.cmd=rx-elf-objcopy
+compiler.elf2bin.cmd=h8300-elf-objcopy
 compiler.elf2bin.flags=-O binary
 
 # Create hex file options
-compiler.elf2hex.cmd=rx-elf-objcopy
+compiler.elf2hex.cmd=h8300-elf-objcopy
 compiler.elf2hex.flags=-O ihex
 
 # Calculate hex size options
-compiler.size.cmd=rx-elf-size
+compiler.size.cmd=h8300-elf-size
 
 # Compile linkscript
-compiler.ld.cmd=rx-elf-ld
-compiler.ld.flags=-ms -mlittle-endian-data
+compiler.ld.cmd=h8300-elf-ld-wrapper
+compiler.ld.flags=noprelink nologo -no-keep-memory -S
 
 # Compile c files
-recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} {compiler.h8s_c_include} {includes} "{source_file}" -c -o "{object_file}"
+recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} {compiler.h8s_include} {compiler.h8300_include} {includes} "{source_file}" -c -o "{object_file}"
 
 # Compile c++ files
-recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} {compiler.h8s_cplusplus_include} {includes} "{source_file}" -c -o "{object_file}"
+recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} {compiler.h8s_include} {compiler.h8300_include} {includes} "{source_file}" -c -o "{object_file}"
 
 # Compile S files
-recipe.S.o.pattern="{compiler.path}{compiler.S.cmd}" {compiler.S.flags} {compiler.h8s_include} {includes} "{source_file}" -c -o "{object_file}"
+recipe.S.o.pattern="{compiler.path}{compiler.S.cmd}" {compiler.S.flags} {compiler.h8s_include} {compiler.h8300_include} {includes} "{source_file}" -c -o "{object_file}"
 
 # Create archives
 recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} "{archive_file_path}" "{object_file}"

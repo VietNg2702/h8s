@@ -3,6 +3,5 @@
 
 #include "variant.h"
 
-UARTClass Serial(6,8);
 
 #endif

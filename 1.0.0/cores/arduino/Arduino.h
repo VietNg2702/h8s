@@ -28,6 +28,7 @@
 
 #include <avr/pgmspace.h>
 
+#include "binary.h"
 #include "pins_arduino.h"
 
 #ifdef __cplusplus
@@ -36,6 +37,7 @@ extern "C" {
 #include "wiring.h"
 #include "wiring_constants.h"
 
+#define SystemCoreClock 0
 #define clockCyclesPerMicrosecond() ( SystemCoreClock / 1000000L )
 #define clockCyclesToMicroseconds(a) ( ((a) * 1000L) / (SystemCoreClock / 1000L) )
 #define microsecondsToClockCycles(a) ( (a) * (SystemCoreClock / 1000000L) )

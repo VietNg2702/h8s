@@ -19,10 +19,8 @@
 #ifndef _UART_CLASS_
 #define _UART_CLASS_
 
-
 #include "HardwareSerial.h"
 #include "RingBuffer.h"
-#include <cstddef>
 
 #define	BAUD_31250	23
 #define	BAUD_19200	38
@@ -40,7 +38,7 @@ class UARTClass : public HardwareSerial
     int peek(void);
     int read(void);
     void flush(void);
-    size_t write(const uint8_t data);
+    size_t write(const char data);
     size_t write(const char * data);
     void irq_handler(uint8_t data);
     operator bool() {return (true);} // UART always active

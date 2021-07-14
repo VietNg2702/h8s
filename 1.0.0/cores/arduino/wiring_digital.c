@@ -1,6 +1,6 @@
 #include "variant.h"
 #include "wiring_digital.h"
-#include "iodefine.h"
+
 
 void pinMode(char PORT, uint32_t pin, uint32_t mode)
 {
@@ -19,11 +19,11 @@ void pinMode(char PORT, uint32_t pin, uint32_t mode)
             else P3.DDR &= (~(0x01<<pin));
         }
         break;
-        case '4':
-        {
-            if(mode) P4.DDR |= (0x01<<pin);
-            else P4.DDR &= (~(0x01<<pin));
-        }
+        // case '4':
+        // {
+        //     if(mode) P4.DDR |= (0x01<<pin);
+        //     else P4.DDR &= (~(0x01<<pin));
+        // }
         break;
         case '7':
         {
@@ -31,12 +31,12 @@ void pinMode(char PORT, uint32_t pin, uint32_t mode)
             else P7.DDR &= (~(0x01<<pin));
         }
         break;
-        case '9':
-        {
-            if(mode) P9.DDR |= (0x01<<pin);
-            else P9.DDR &= (~(0x01<<pin));
-        }
-        break;
+        // case '9':
+        // {
+        //     if(mode) P9.DDR |= (0x01<<pin);
+        //     else P9.DDR &= (~(0x01<<pin));
+        // }
+        // break;
         case 'A':
         {
             if(mode) PA.DDR |= (0x01<<pin);
@@ -99,24 +99,24 @@ void digitalWrite(char PORT, uint32_t pin, uint32_t val)
            else P3.DR.BYTE &= (~(0x01<<pin));
         }
         break;
-        case '4':
-        {
-            if(val) P4.DR.BYTE |= (0x01<<pin);
-           else P4.DR.BYTE &= (~(0x01<<pin));
-        }
-        break;
+        // case '4':
+        // {
+        //     if(val) P4.DR.BYTE |= (0x01<<pin);
+        //    else P4.DR.BYTE &= (~(0x01<<pin));
+        // }
+        // break;
         case '7':
         {
             if(val) P7.DR.BYTE |= (0x01<<pin);
            else P7.DR.BYTE &= (~(0x01<<pin));
         }
         break;
-        case '9':
-        {
-            if(val) P9.DR.BYTE |= (0x01<<pin);
-           else P9.DR.BYTE &= (~(0x01<<pin));
-        }
-        break;
+        // case '9':
+        // {
+        //     if(val) P9.DR.BYTE |= (0x01<<pin);
+        //    else P9.DR.BYTE &= (~(0x01<<pin));
+        // }
+        // break;
         case 'A':
         {
             if(val) PA.DR.BYTE |= (0x01<<pin);

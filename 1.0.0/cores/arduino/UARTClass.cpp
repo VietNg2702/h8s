@@ -21,8 +21,6 @@
 #include <string.h>
 #include "UARTClass.h"
 #include "iodefine.h"
-#include "rsk2215rdef.h"
-#include <machine.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -35,7 +33,7 @@ Description:	SCI0 receive interrupt handler.
 Parameters: 	none
 Return value: 	none
 ***********************************************************************************/
-__interrupt(vect=81) void INT_RXI0_SCI0(void)
+void INT_RXI0_SCI0(void)
 {
 	if(SCI0.SSR.BIT.RDRF == 1)
 	{
@@ -69,10 +67,6 @@ void uart_init(unsigned long bauds)
 	/*	Set baud rate */
 	SCI0.BRR = bauds;
 
-	/*	Settling delay.	*/
-	nop();
-	nop();
-
 	/* Clear all status flags.	*/
 	SCI0.SSR.BYTE = 0x00;
 
@@ -89,8 +83,6 @@ void uart_init(unsigned long bauds)
 	/*	dummy read.	*/
 	dummy = SCI0.RDR;
 
-	set_imask_ccr((unsigned char)0);
-	set_imask_exr((unsigned char)0);
 }
 /***********************************************************************************
 End of function uart_init
@@ -172,7 +164,7 @@ void UARTClass::flush(void)
     rxBuffer.clear();
 }
 
-size_t UARTClass::write(const uint8_t data)
+size_t UARTClass::write(const char data)
 {
     text_write(&data);
     return 1;

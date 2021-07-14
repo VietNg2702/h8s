@@ -24,13 +24,13 @@
 /*
  * \brief
  */
-extern uint8_t shiftIn( uint8_t ulDataPin, uint8_t ulClockPin, uint8_t ulBitOrder ) ;
+extern uint8_t shiftIn(char PORTDATA,uint8_t dataPin, char PORTCLK, uint8_t clockPin, uint8_t bitOrder) ;
 
 
 /*
  * \brief
  */
-extern void shiftOut( uint8_t ulDataPin, uint8_t ulClockPin, uint8_t ulBitOrder, uint8_t ulVal ) ;
+extern void shiftOut(char PORTDATA, uint8_t dataPin, char PORTCLK, uint8_t clockPin, uint8_t bitOrder, uint8_t val) ;
 
   
 

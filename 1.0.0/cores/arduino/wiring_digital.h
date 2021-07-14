@@ -19,6 +19,14 @@
 #ifndef _WIRING_DIGITAL_
 #define _WIRING_DIGITAL_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+#include "iodefine.h"
+#ifdef __cplusplus    
+}
+#endif
+
 /**
  * \brief Configures the specified pin to behave either as an input or an output. See the description of digital pins for details.
  *

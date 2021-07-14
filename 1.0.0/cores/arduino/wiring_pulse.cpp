@@ -23,25 +23,25 @@
  * or LOW, the type of pulse to measure.  Works on pulses from 2-3 microseconds
  * to 3 minutes in length, but must be called at least a few dozen microseconds
  * before the start of the pulse. */
-extern uint32_t pulseIn(uint32_t pin, bool state, uint32_t timeout)
+extern uint32_t pulseIn(char PORT, uint32_t pin, bool state, uint32_t timeout)
 {
 	uint32_t numloops = 0;
 	uint32_t maxloops = microsecondsToClockCycles(timeout) / 16;
 	uint32_t start, end;
 	
 	// wait for any previous pulse to end
-	while (digitalRead(pin) == state)
+	while (digitalRead(PORT, pin) == state)
 		if (numloops++ == maxloops)
 			return 0;
 	
 	// wait for the pulse to start
-	while (digitalRead(pin) != state)
+	while (digitalRead(PORT, pin) != state)
 		if (numloops++ == maxloops)
 			return 0;
 	
 	// wait for the pulse to stop
 	start = micros();
-	while (digitalRead(pin) == state)
+	while (digitalRead(PORT, pin) == state)
 		if (numloops++ == maxloops)
 			return 0;
 	end  = micros();
