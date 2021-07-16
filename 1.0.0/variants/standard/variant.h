@@ -13,6 +13,8 @@
 
 #include "Arduino.h"
 #include "pins_arduino.h"
+#include "UARTClass.h"
 
+extern UARTClass Serial;
 
 #endif 

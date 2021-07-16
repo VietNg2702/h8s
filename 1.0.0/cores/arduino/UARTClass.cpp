@@ -20,102 +20,13 @@
 #include <stdio.h>
 #include <string.h>
 #include "UARTClass.h"
-#include "iodefine.h"
+
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-
-/***********************************************************************************
-Function Name: 	INT_RXI0_SCI0
-Description:	SCI0 receive interrupt handler.
-Parameters: 	none
-Return value: 	none
-***********************************************************************************/
-void INT_RXI0_SCI0(void)
-{
-	if(SCI0.SSR.BIT.RDRF == 1)
-	{
-        Serial.irq_handler(SCI0.RDR);
-	}
-}
-/***********************************************************************************
-End of function INT_RXI0_SCI0
-***********************************************************************************/
-
-
-
-/***********************************************************************************
-Function Name : uart_init
-Description	  : SCI_0 initialization.
-			  	UART Settings - 19200 baud, 8 data bits, 1 stop bit, no parity.
-Parameters	  : none
-Returns		  : none
-***********************************************************************************/
-void uart_init(unsigned long bauds)
-{
-	unsigned char dummy;
-
-	/*	Select internal baud rate generator.	*/
-	SCI0.SCR.BYTE = 0;
-
-	/*	SCI is configured for asynchronous communication, 8 bit data, 1 stop bit,
-		no parity. cpu clock has been selected as a source clock for UART.	*/
-	SCI0.SMR.BYTE = 0;
-
-	/*	Set baud rate */
-	SCI0.BRR = bauds;
-
-	/* Clear all status flags.	*/
-	SCI0.SSR.BYTE = 0x00;
-
-	/* Select interrupt control mode 2 to set the user defined interrupt priorities. */
-	SYSCR.BIT.INTM = 2;
-
-	/*	Set interrupt priority od SCI_0 other than 0 in order to enbale interrupt. */
-	INTC.IPRJ.BIT._SCI0 = 1;
-
-	/* Recieve Interrupt Enable (RIE = 1 ) */
-	/* Transmission/Reception Enable (TE = 1, RE = 1) */
-	SCI0.SCR.BYTE = 0x70;
-
-	/*	dummy read.	*/
-	dummy = SCI0.RDR;
-
-}
-/***********************************************************************************
-End of function uart_init
-***********************************************************************************/
-
-/***********************************************************************************
-Function Name : text_write
-Description	  : This function sends a text string to the terminal program.
-Parameters	  : msg_string -> the text string to output.
-Return Value  : none
-***********************************************************************************/
-void text_write(const char * msg_string)
-{
-	char i;
-
-	/* This loop reads in the text string and puts it in the UART transmit
-	   buffer */
-	for (i=0; msg_string[i]; i++)
-	{
-		while(SCI0.SSR.BIT.TDRE == 0)
-		{
-			/* Wait here until the character is transmitted completely */
-		}
-		SCI0.TDR = msg_string[i];
-
-		/* set 0 to TDRE */
-		SCI0.SSR.BIT.TDRE = 0;
-	}
-}
-/***********************************************************************************
-End of function text_write
-*******************************************************************************/
-
+#include "ioh82623.h"
+#include "sci_uart.h"
 
 #ifdef __cplusplus
 }
@@ -124,14 +35,14 @@ End of function text_write
 
 // Public Methods //////////////////////////////////////////////////////////////
 
-UARTClass::UARTClass(uint8_t Tx_pin, uint8_t Rx_pin)
+UARTClass::UARTClass(void)
 {
 
 }
 
 void UARTClass::begin(unsigned long bauds)
 {
-    uart_init(bauds);
+    InitUART( CSR_9600, P_NONE, 1, 8);              /* Set up the UART */
     return;
 }
 
@@ -164,13 +75,13 @@ void UARTClass::flush(void)
     rxBuffer.clear();
 }
 
-size_t UARTClass::write(const char data)
+size_t UARTClass::write(char data)
 {
-    text_write(&data);
+    PutChar(data);
     return 1;
 }
 
-size_t UARTClass::write(const char * data)
+size_t UARTClass::write(char * data)
 {
 	size_t writed = 0;
 	while(*data != '\0')
@@ -182,8 +93,15 @@ size_t UARTClass::write(const char * data)
 	return writed;
 }
 
-void UARTClass::irq_handler(uint8_t data)
+void UARTClass::rx_event(void)
 {
-  rxBuffer.store_char(data);
+	if(UART_SR & SR_RXRDY)
+	{
+		rxBuffer.store_char(UART_RHR);
+	} 
+
+	/*--- Clear the RXRDY flag in SSR ---*/
+    /*--- This is done automatically! ---*/
+    UART_SR &= ~ SR_RXRDY;
 }
 

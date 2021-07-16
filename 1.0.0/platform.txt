@@ -5,16 +5,16 @@ version=1.0.0
 compiler.path={runtime.tools.gnuh8-elf.path}/v0902/h8300-elf/bin/
 
 # Compile s files options
-compiler.S.cmd=h8300-elf-as
-compiler.S.flags=-D RELEASE -ms -Os -fno-function-cse -funit-at-a-time -falign-jumps -fdata-sections -ffunction-sections -nostdinc
+compiler.S.cmd=h8300-elf-gcc
+compiler.S.flags=-c -g -x assembler-with-cpp 
 
 # Compile c files options
 compiler.c.cmd=h8300-elf-gcc
-compiler.c.flags=-D RELEASE -ms -Os -fno-function-cse -funit-at-a-time -falign-jumps -fdata-sections -ffunction-sections -nostdinc
+compiler.c.flags=-O2  -gdwarf-2 -ms -ms2600 -mint32  -nostartfiles
 
 # Compile cpp files options
 compiler.cpp.cmd=h8300-elf-c++
-compiler.cpp.flags=-D RELEASE -ms -Os -fno-function-cse -funit-at-a-time -falign-jumps -fdata-sections -ffunction-sections -nostdinc
+compiler.cpp.flags=-O2  -gdwarf-2 -ms -ms2600 -mint32  -nostartfiles -fno-rtti
 
 # Compile includes
 compiler.h8s_include="-I{build.system.path}/include" "-I{runtime.platform.path}/variants/standard" "-I{runtime.platform.path}/cores/arduino" "-I{runtime.platform.path}/cores/arduino/avr" "-I{runtime.platform.path}/cores/arduino/h8s" 
@@ -22,10 +22,9 @@ compiler.h8300_include="-I{runtime.tools.gnuh8-elf.path}/v0902/h8300-elf/h8300-e
 
 # Create archives options
 compiler.ar.cmd=h8300-elf-ar
-compiler.ar.flags=srec
-#--compiler-options=-ms -Os -fdata-sections -ffunction-sections -falign-jumps -fno-function-cse -funit-at-a-time --select-lib=optlib --header-files=stdio,stdlib,string
+compiler.ar.flags=rsc
 
-#Archive include
+# Archive include
 archive_file_path={build.path}/{archive_file}
 
 # Combine to create elf file options
@@ -43,33 +42,32 @@ compiler.elf2hex.flags=-O ihex
 compiler.size.cmd=h8300-elf-size
 
 # Compile linkscript
-compiler.ld.cmd=h8300-elf-ld-wrapper
-compiler.ld.flags=noprelink nologo -no-keep-memory -S
+compiler.ld.cmd=h8300-elf-gcc
+compiler.ld.flags=-O2 -gdwarf-2 -ms -ms2600 -mint32 -nostartfiles
 
 # Compile c files
-recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} {compiler.h8s_include} {compiler.h8300_include} {includes} "{source_file}" -c -o "{object_file}"
+recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} {compiler.h8s_include} {includes} -c "{source_file}" -o "{object_file}"
 
 # Compile c++ files
-recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} {compiler.h8s_include} {compiler.h8300_include} {includes} "{source_file}" -c -o "{object_file}"
+recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} {compiler.h8s_include} {includes} -c "{source_file}" -o "{object_file}"
 
 # Compile S files
-recipe.S.o.pattern="{compiler.path}{compiler.S.cmd}" {compiler.S.flags} {compiler.h8s_include} {compiler.h8300_include} {includes} "{source_file}" -c -o "{object_file}"
+recipe.S.o.pattern="{compiler.path}{compiler.S.cmd}" {compiler.S.flags} "{source_file}" -o "{object_file}"
 
 # Create archives
 recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} "{archive_file_path}" "{object_file}"
 
 # Combine gc-sections, archives, and objects
-recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}"  {compiler.ld.flags} -Xlinker --gc-sections -Wl,-Map={build.path}/{build.project_name}.map -o "{build.path}/{build.project_name}.elf" "-L{build.path}/{archive_file}" -Wl,--warn-common {object_files} "{archive_file_path}"
+recipe.c.combine.pattern="{compiler.path}{compiler.ld.cmd}" {compiler.ld.flags} -Xlinker -Map -Xlinker "{build.path}/{build.project_name}.map" -T "{runtime.platform.path}/cores/arduino/h8s/sample.ld" -o "{build.path}/{build.project_name}.out" "{runtime.platform.path}/cores/arduino/h8s/start.S" "{runtime.platform.path}/cores/arduino/h8s/vects.c" "{runtime.platform.path}/cores/arduino/h8s/hwinit.c" "{runtime.platform.path}/cores/arduino/main.cpp" "-L{build.path}/{archive_file}" {object_files} "{archive_file_path}" {compiler.h8s_include}
 
 # Create bin
-recipe.objcopy.eep.pattern="{compiler.path}{compiler.elf2bin.cmd}" {compiler.elf2bin.flags} "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.bin"
+recipe.objcopy.eep.pattern="{compiler.path}{compiler.elf2bin.cmd}" {compiler.elf2bin.flags} "{build.path}/{build.project_name}.out" "{build.path}/{build.project_name}.bin"
 
 ## Create hex
-recipe.objcopy.hex.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf2hex.flags} "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.hex"
-
+recipe.objcopy.hex.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf2hex.flags} "{build.path}/{build.project_name}.out" "{build.path}/{build.project_name}.hex"
 
 # Compute size
-recipe.size.pattern="{compiler.path}{compiler.size.cmd}" --format=berkeley "{build.path}/{build.project_name}.elf"
+recipe.size.pattern="{compiler.path}{compiler.size.cmd}" --format=berkeley "{build.path}/{build.project_name}.out"
 
 
 # Uploader tools

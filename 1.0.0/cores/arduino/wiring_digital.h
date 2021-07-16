@@ -18,11 +18,13 @@
 
 #ifndef _WIRING_DIGITAL_
 #define _WIRING_DIGITAL_
+#include <stdint.h>
+#include <stdbool.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include "iodefine.h"
+#include "h8s/ioh82623.h"
 #ifdef __cplusplus    
 }
 #endif

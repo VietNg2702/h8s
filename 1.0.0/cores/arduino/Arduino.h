@@ -26,14 +26,16 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include <avr/pgmspace.h>
+#include "pgmspace.h"
 
 #include "binary.h"
 #include "pins_arduino.h"
 
+
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 #include "wiring.h"
 #include "wiring_constants.h"
 
@@ -63,7 +65,6 @@ extern void loop( void ) ;
 
 
 // Include board variant
-#include "variant.h"
 #include "wiring_digital.h"
 #include "wiring_analog.h"
 #include "wiring_shift.h"

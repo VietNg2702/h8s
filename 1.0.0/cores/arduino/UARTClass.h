@@ -22,15 +22,10 @@
 #include "HardwareSerial.h"
 #include "RingBuffer.h"
 
-#define	BAUD_31250	23
-#define	BAUD_19200	38
-#define	BAUD_9600	  77
-#define	BAUD_4800	  155
-
 class UARTClass : public HardwareSerial
 {
   public:
-    UARTClass(uint8_t Tx_pin, uint8_t Rx_pin);
+    UARTClass(void);
     void begin(unsigned long dwBaudRate);
     void end(void);
     int available(void);
@@ -38,9 +33,9 @@ class UARTClass : public HardwareSerial
     int peek(void);
     int read(void);
     void flush(void);
-    size_t write(const char data);
-    size_t write(const char * data);
-    void irq_handler(uint8_t data);
+    size_t write(char data);
+    size_t write(char * data);
+    void rx_event(void);
     operator bool() {return (true);} // UART always active
   private:
 		RingBuffer rxBuffer;

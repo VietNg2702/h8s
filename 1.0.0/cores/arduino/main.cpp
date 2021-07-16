@@ -9,40 +9,23 @@
 /*                                                                     */
 /***********************************************************************/
 #define ARDUINO_MAIN
-#include "Arduino.h"                  
-#include "iodefine.h"
-#include "UARTClass.h"
-UARTClass Serial(6,8);
+#include "Arduino.h"                 
+#include "ioh82623.h"
+#include "UartClass.h"
 
-#ifdef CPPAPP
-//Initialize global constructors
-extern "C" void __main()
-{
-  static int initialized;
-  if (! initialized)
-    {
-      typedef void (*pfunc) ();
-      extern pfunc __ctors[];
-      extern pfunc __ctors_end[];
-      pfunc *p;
-
-      initialized = 1;
-      for (p = __ctors_end; p > __ctors; )
-	(*--p) ();
-
-    }
-}
-#endif 
+UARTClass Serial;
 
 int main(void)
 {
-     setup();
+    setup();
     while(1)
     {
         loop();
-		if (serialEventRun) serialEventRun();
+        Serial.rx_event();
     }
-  return 0;
+
+    return 0;
+
 }
 
 
