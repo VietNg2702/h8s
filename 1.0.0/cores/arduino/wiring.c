@@ -33,10 +33,6 @@
 
 static volatile uint64_t uSeconds = 0;
 
-void SysTick_Handler( void )
-{
-	uSeconds++;
-}
 
 uint32_t millis()
 {
@@ -57,4 +53,75 @@ void delay(uint32_t dwMs)
 	{
 		nop();
 	}
+}
+/*
+* Outline 		: systick_config
+* Description 	: Configures the timer as follows -
+*					clock - PHI/16, counts up */
+
+void systick_config(void)
+{
+	/* Stop the timer */
+	TPU.TSTR.BIT.CST0 = 0x0;
+	
+	/* Timer Control Register, (TCR)
+	b2:b1:b0 	- TPSC2:TPSC1:TPSC0 - 010 (Internal clock: counts on PHI/16) 
+	b4:b3 		- CKEG1:CKEG0 	 	- 00  (Count at rising edge) 
+	b7:b6:b5 	- CCLR2:CCLR1:CCLR0 - 001 (TCNT cleared by TGRA compare 
+											match/input capture) */
+	TPU0.TCR.BYTE = 0x23;
+			
+	/* Timer Mode Register (TMDR)
+	b3:b2:b1:b0	- MD3:MD2:MD1:MD0	- 0000 (Normal operation)
+	b4			- BFA				- 0    (TGRA operates normally)
+	b5			- BFB				- 0	   (TGRB operates normally)
+	b7:b6		- Reserved			- 11  */
+	
+	TPU0.TMDR.BYTE = 0xc0;
+	
+	/* Disable interrupts */
+	set_ccr((unsigned char)1);
+
+	/* Timer Interrupt Enable Register (TIER)
+	b0		- TGIEA		- 1 (Interrupt requests (TGIA) by TGFA bit enabled)
+	b1		- TGIEB		- 1 (Interrupt requests (TGIB) by TGFB bit enabled)
+	b2		- TGIEC		- 0 (Interrupt requests (TGIC) by TGFC bit disabled)
+	b3		- TGIED		- 0 (Interrupt requests (TGID) by TGFD bit disabled) 	 
+	b4		- TCIEV		- 0 (Interrupt requests (TCIV) by TCFV disabled)
+	b5		- TCIEU		- 0	(Interrupt requests (TCIV) by TCFV disabled)
+	b6		- Reserved	- 1 
+	b7		- TTGE		- 0 (A/D conversion start request generation disabled) */
+	
+	TPU0.TIER.BYTE = 0x43;
+		
+	/* Initialize the Timer General Register */
+	TPU0.TGRA = 0x7FFF;
+	TPU0.TGRB = 0x3FFF;
+	   
+	/* Enable interrupts */
+	set_ccr((unsigned char)0);
+
+	/* Start the timer */
+	TPU.TSTR.BIT.CST0 = 1;
+}
+/******************************************************************************
+End of function StartTimer
+******************************************************************************/
+
+void INT_TGI0B_TPU0(void) 
+{
+	
+	/* Clear timer interrupt flag */
+	TPU0.TSR.BIT.TGFB = 0;
+}
+
+void INT_TGI0A_TPU0(void) 
+{
+	uSeconds++;
+
+	/* Set the interrupt for every 1 us */
+	TPU0.TGRA = 2;
+
+	/* Clear timer interrupt flag */
+	TPU0.TSR.BIT.TGFA = 0;
 }

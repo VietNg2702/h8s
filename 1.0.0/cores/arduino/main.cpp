@@ -9,19 +9,21 @@
 /*                                                                     */
 /***********************************************************************/
 #define ARDUINO_MAIN
-#include "Arduino.h"                 
-#include "ioh82623.h"
+#include "Arduino.h"  
 #include "UartClass.h"
+#include "hwsetup.h"
 
-UARTClass Serial;
+UARTClass Serial(6,8);
 
 int main(void)
 {
+    HardwareSetup();
+    systick_config();
     setup();
     while(1)
     {
         loop();
-        Serial.rx_event();
+        if (serialEventRun) serialEventRun();
     }
 
     return 0;

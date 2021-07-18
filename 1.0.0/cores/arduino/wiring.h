@@ -20,6 +20,8 @@
 #ifndef _WIRING_
 #define _WIRING_
 
+void systick_config(void);
+
 /**
  * \brief Returns the number of milliseconds since the board began running the current program.
  *

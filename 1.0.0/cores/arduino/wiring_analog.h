@@ -19,8 +19,9 @@
 #ifndef _WIRING_ANALOG_
 #define _WIRING_ANALOG_
 
-#include "wiring_adc.h"
-
+#include <stdint.h>
+#include <stdbool.h>
+#include "iodefine.h"
 
 /*
  * \brief Writes an analog value (PWM wave) to a pin.

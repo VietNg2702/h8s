@@ -27,19 +27,17 @@
 #include <stdbool.h>
 
 #include "pgmspace.h"
-
-#include "binary.h"
 #include "pins_arduino.h"
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+#include "inlines.h"
 #include "wiring.h"
 #include "wiring_constants.h"
 
-#define SystemCoreClock 0
+#define SystemCoreClock 32000000L
 #define clockCyclesPerMicrosecond() ( SystemCoreClock / 1000000L )
 #define clockCyclesToMicroseconds(a) ( ((a) * 1000L) / (SystemCoreClock / 1000L) )
 #define microsecondsToClockCycles(a) ( (a) * (SystemCoreClock / 1000000L) )
