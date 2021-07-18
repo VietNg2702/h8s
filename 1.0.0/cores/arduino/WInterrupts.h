@@ -24,19 +24,19 @@
 typedef void (*interrupt_handle_t)( void ) ;
 
 typedef enum{
-  LOW_EDGE = 0x00,
-  FALLING_EDGE,
-  RISING_EDGE,
-  CHANGE_EDGE
+  LOW_LEVEL = 0b00,
+  FALLING_EDGE = 0b01,
+  RISING_EDGE = 0b10,
+  CHANGE_EDGE = 0b11
 }interrupt_mode_t;
 
 
-void attachInterrupt(uint32_t pin, interrupt_handle_t callback, interrupt_mode_t mode);
+void attachInterrupt(char PORT, uint32_t pin, interrupt_handle_t callback, interrupt_mode_t mode);
 
 /*
  * \brief Turns off the given interrupt.
  */
-void detachInterrupt(uint32_t pin);
+void detachInterrupt(char PORT, uint32_t pin);
 
   
 

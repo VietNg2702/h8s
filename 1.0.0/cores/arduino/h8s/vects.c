@@ -23,9 +23,22 @@ extern void INT_TGI1B_TPU1 (void);
 extern void INT_RXI1_SCI_1(void);
 extern void INT_TGI0B_TPU0(void);
 extern void INT_TGI0A_TPU0(void);
+extern void INT_IRQ0(void);
 extern void INT_IRQ1(void);
 extern void INT_IRQ2(void);
-extern void INT_IRQ9(void);
+extern void INT_IRQ3(void);
+extern void INT_IRQ4(void);
+extern void INT_IRQ5(void);
+extern void INT_IRQ6(void);
+extern void INT_IRQ7(void);
+extern void INT_IRQ8(void);
+// extern void INT_IRQ9(void);
+// extern void INT_IRQ10(void);
+// extern void INT_IRQ11(void);
+// extern void INT_IRQ12(void);
+extern void INT_IRQ13(void);
+extern void INT_IRQ14(void);
+extern void INT_IRQ15(void);
 /***********************************************************************/
 
 typedef void (*fp) (void);
@@ -52,22 +65,22 @@ const fp HardwareVectors[] __attribute__ ((section (".vects"))) = {
   (fp)(0), //vect=13
   (fp)(0), //vect=14
   (fp)(0), //vect=15
-  (fp)(0), //vect=16
+  INT_IRQ0, //vect=16
   INT_IRQ1, //vect=17
   INT_IRQ2, //vect=18
-  (fp)(0), //vect=19
-  (fp)(0), //vect=20
-  (fp)(0), //vect=21
-  (fp)(0), //vect=22
-  (fp)(0), //vect=23
-  (fp)(0), //vect=24
-  INT_IRQ9, //vect=25
-  (fp)(0), //vect=26
-  (fp)(0), //vect=27
-  (fp)(0), //vect=28
-  (fp)(0), //vect=29
-  (fp)(0), //vect=30
-  (fp)(0), //vect=31
+  INT_IRQ3, //vect=19
+  INT_IRQ4, //vect=20
+  INT_IRQ5, //vect=21
+  INT_IRQ6, //vect=22
+  INT_IRQ7, //vect=23
+  INT_IRQ8, //vect=24
+  (fp)(0),// INT_IRQ9, //vect=25
+  (fp)(0),// INT_IRQ10, //vect=26
+  (fp)(0),// INT_IRQ11, //vect=27
+  (fp)(0),// INT_IRQ12, //vect=28
+  INT_IRQ13, //vect=29
+  INT_IRQ14, //vect=30
+  INT_IRQ15, //vect=31
   (fp)(0), //vect=32
   (fp)(0), //vect=33
   (fp)(0), //vect=34
@@ -193,40 +206,7 @@ const fp HardwareVectors[] __attribute__ ((section (".vects"))) = {
   (fp)(0), //vect=154
   (fp)(0), //vect=155
   (fp)(0), //vect=156
-  (fp)(0), //vect=157
-  (fp)(0), //vect=158
-  (fp)(0), //vect=159
-  (fp)(0), //vect=160
-  (fp)(0), //vect=161 
-  (fp)(0), //vect=162
-  (fp)(0), //vect=163
-  (fp)(0), //vect=164
-  (fp)(0), //vect=165
-  (fp)(0), //vect=166
-  (fp)(0), //vect=167
-  (fp)(0), //vect=168
-  (fp)(0), //vect=169
-  (fp)(0), //vect=170
-  (fp)(0), //vect=171 
-  (fp)(0), //vect=172
-  (fp)(0), //vect=173
-  (fp)(0), //vect=174
-  (fp)(0), //vect=175
-  (fp)(0), //vect=176
-  (fp)(0), //vect=177
-  (fp)(0), //vect=178
-  (fp)(0), //vect=179
-  (fp)(0), //vect=180
-  (fp)(0), //vect=181 
-  (fp)(0), //vect=182
-  (fp)(0), //vect=183
-  (fp)(0), //vect=184
-  (fp)(0), //vect=185
-  (fp)(0), //vect=186
-  (fp)(0), //vect=187
-  (fp)(0), //vect=188
-  (fp)(0), //vect=189
-  (fp)(0)
+  (fp)(0)  //vect=157
 };
 
 /* Done...

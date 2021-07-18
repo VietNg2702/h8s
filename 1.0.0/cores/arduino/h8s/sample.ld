@@ -25,7 +25,7 @@ SECTIONS
     _vects = .; 
     *(.vects);
   } > rom
-  .text 0x000400 : 
+  .text 0x000300 : 
   { 
     CREATE_OBJECT_SYMBOLS 
     *(.text) 

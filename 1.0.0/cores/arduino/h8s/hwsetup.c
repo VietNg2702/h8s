@@ -20,7 +20,7 @@
 
 /* Copyright (C) 2009. Renesas Technology Europe, All Rights Reserved */
 
-/*””FILE COMMENT””******************************* Technical reference data ****
+/*ï¿½ï¿½FILE COMMENTï¿½ï¿½******************************* Technical reference data ****
 * File Name		: hwsetup.c
 * Version 		: 1.00
 * Device 		: H8S/2456R (R4F24569VFQV)
@@ -31,7 +31,7 @@
 
 /******************************************************************************
 * History 		: 17.06.2009 Ver. 1.00 First Release
-*””FILE COMMENT END””*********************************************************/
+*ï¿½ï¿½FILE COMMENT ENDï¿½ï¿½*********************************************************/
 
 /******************************************************************************
 User Includes (Project level includes)
@@ -57,7 +57,7 @@ static void ConfigurePortPins(void);
 User Program Code 
 ******************************************************************************/
 
-/*””FUNC COMMENT””*************************************************************
+/*ï¿½ï¿½FUNC COMMENTï¿½ï¿½*************************************************************
 * Outline 		: HardwareSetup
 * Description 	: Sets up the hardware.
 *   			  This function calls the hardware initialization functions to
@@ -66,7 +66,7 @@ User Program Code
 *				  application.
 * Argument  	: none
 * Return value  : none
-*””FUNC COMMENT END””*********************************************************/
+*ï¿½ï¿½FUNC COMMENT ENDï¿½ï¿½*********************************************************/
 
 void HardwareSetup(void)
 {    
@@ -83,13 +83,13 @@ void HardwareSetup(void)
 End of function HardwareSetup
 ******************************************************************************/
 
-/*””FUNC COMMENT””*************************************************************
+/*ï¿½ï¿½FUNC COMMENTï¿½ï¿½*************************************************************
 * Outline 		: ConfigureOperatingFrequency
 * Description 	: Sets up operating speed and configures the main & sub-clock
 *				  and USB clock	
 * Argument  	: none
 * Return value  : none
-*””FUNC COMMENT END””*********************************************************/
+*ï¿½ï¿½FUNC COMMENT ENDï¿½ï¿½*********************************************************/
 
 static void ConfigureOperatingFrequency(void)
 {
@@ -132,14 +132,14 @@ static void ConfigureOperatingFrequency(void)
 End of function ConfigureOperatingFrequency
 ******************************************************************************/
 
-/*””FUNC COMMENT””*************************************************************
+/*ï¿½ï¿½FUNC COMMENTï¿½ï¿½*************************************************************
 * Outline 		: ConfigurePortPins
 * Description 	: Configures MCU port pins. This function configures the port 
 *				  pins so that it can be used by the respective modules. It 
 *				  also configures the unused port pins as output low.
 * Argument 		: none
 * Return value 	: none
-*””FUNC COMMENT END””*********************************************************/
+*ï¿½ï¿½FUNC COMMENT ENDï¿½ï¿½*********************************************************/
 
 static void ConfigurePortPins(void)
 {
@@ -161,8 +161,8 @@ static void ConfigurePortPins(void)
 	P16			- SSCK0A_TIOCA2	- 1  (SSCK pin, configured as output low) 
 	P17			- P17_SCS0An	- 1  (SCS pin, configured as output low) */ 	
 	
-	P1.DR.BYTE = 0x00;
-	P1.DDR = 0xDB;
+	// P1.DR.BYTE = 0x00;
+	// P1.DDR = 0xDB;
 	
 	/*	Configure port 2 pins as follows -
 	P20				- PUPD+			- 1 (PULLUP control pin for D+signal,
@@ -172,8 +172,8 @@ static void ConfigurePortPins(void)
 	P26				- P26_DLCD6_IO6	- 1 (LCD pin, configured as output low)
 	P27				- P27_DLCD7_IO7	- 1 (LCD pin, configured as output low) */
 	
-	P2.DR.BYTE = 0x00;
-	P2.DDR = 0xC1;
+	// P2.DR.BYTE = 0x00;
+	// P2.DDR = 0xC1;
 	
 	/*	Configure port 3 pins as follows -
 	P30		- TXD0			- 1 (UART0 TX pin, configured as output low)
@@ -183,8 +183,8 @@ static void ConfigurePortPins(void)
 	P34		- SCK0_SDA0		- 1 (SSU clock input/output pin, configured as output low)
 	P35		- DLCDRS_SCL0	- 1 (LCD pin, configured as output low) */
 	
-	P3.DR.BYTE = 0x00;	
-	P3.DDR = 0x33;
+	// P3.DR.BYTE = 0x00;	
+	// P3.DDR = 0x33;
 	
 	/* Note - Port4 does not have DDR registers.	*/
 
@@ -194,8 +194,8 @@ static void ConfigurePortPins(void)
 	P52		- IRQ2An_SCK2	- 0 (SCK2 pin, configured as input)
 	P53		- TRSTn			- 0 (No change, E10A pin) */
 	
-	P5.DR.BYTE &= (unsigned char) 0xF8;		
-	P5.DDR = 0x01;
+	// P5.DR.BYTE &= (unsigned char) 0xF8;		
+	// P5.DDR = 0x01;
 	
 	/*	Configure port 6 pins as follows -
 	P60		- LCD_GPIO3			- 1 (LCD pin, configured as output low)
@@ -206,8 +206,8 @@ static void ConfigurePortPins(void)
 									 as output high)
 	P65		- DACK1n_LED1_IO1	- 1 (LED pin, configured as output high) */
 	
-	P6.DR.BYTE = 0x38;	
-	P6.DDR = 0x3D;
+	// P6.DR.BYTE = 0x38;	
+	// P6.DDR = 0x3D;
 	
 	/* Note - Port7 does not exists on this device. */
 
@@ -220,8 +220,8 @@ static void ConfigurePortPins(void)
 									 configured as output high)
 	P85		- DLCDE_SCK3		- 1 (LCD pin, configured as output low) */
 	
-	P8.DR.BYTE = 0x10;	
-	P8.DDR = 0x38;
+	// P8.DR.BYTE = 0x10;	
+	// P8.DDR = 0x38;
 	
 	/* Note - Port9 does not have DDR registers.	*/
 	
@@ -235,7 +235,7 @@ static void ConfigurePortPins(void)
 	PA6		- A(22)		- 1  (Address A22 output) 	
 	PA7		- A(23)		- 1  (Address A23 output) 	*/
 	
-	PA.DDR = 0xFF;
+	// PA.DDR = 0xFF;
 	
 	/* Port Function Control Register 1 (PFCR1) -
 	b0		- A16E		- 1 (A16 output when PA0DDR = 1) 
@@ -247,7 +247,7 @@ static void ConfigurePortPins(void)
 	b6		- A22E		- 1 (A22 output when PA6DDR = 1)
 	b7		- A23E		- 1 (A23 output when PA7DDR = 1) */
 	
-	PFC.PFCR1.BYTE = 0xFF;
+	// PFC.PFCR1.BYTE = 0xFF;
 	
 	/* Configure port B pins as follows	
 	PB0		- A(8)		- 1  (Address A8 output) 	
@@ -259,7 +259,7 @@ static void ConfigurePortPins(void)
 	PB6		- A(14)		- 1  (Address A14 output) 	
 	PB7		- A(15)		- 1  (Address A15 output) 	*/
 	
-	PB.DDR = 0xFF;
+	// PB.DDR = 0xFF;
 	
 	/* Configure port C pins as follows	
 	PC0		- A(0)		- 1  (Address A0 output) 	
@@ -271,7 +271,7 @@ static void ConfigurePortPins(void)
 	PC6		- A(6)		- 1  (Address A6 output) 	
 	PC7		- A(7)		- 1  (Address A7 output) 	*/
 	
-	PC.DDR = 0xFF;
+	// PC.DDR = 0xFF;
 	
 	/* Pins belong to ports D & E default to data pins in CPU operating mode 4 */
 
@@ -280,19 +280,19 @@ static void ConfigurePortPins(void)
 	PJ1		- YDRIVE_LED3_IO3	- 1 (LED pin, configured as output high) 
 	PJ2		- PJ2				- 1 (Unused pin, configured as output low) 	*/
 	
-	PJ.DR.BYTE = 0x03;		
-	PJ.DDR = 0x07;
+	// PJ.DR.BYTE = 0x03;		
+	// PJ.DDR = 0x07;
 }
 /******************************************************************************
 End of function ConfigurePortPins
 ******************************************************************************/
 
-/*””FUNC COMMENT””*************************************************************
+/*ï¿½ï¿½FUNC COMMENTï¿½ï¿½*************************************************************
 * Outline 		: EnablePeripheralModules
 * Description 	: Enables Peripheral Modules before use 
 * Argument  	: none
 * Return value  : none
-*””FUNC COMMENT END””*********************************************************/
+*ï¿½ï¿½FUNC COMMENT ENDï¿½ï¿½*********************************************************/
 
 static void EnablePeripheralModules(void)
 {
