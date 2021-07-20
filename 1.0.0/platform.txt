@@ -36,7 +36,9 @@ compiler.elf2bin.flags=-O binary
 
 # Create hex file options
 compiler.elf2hex.cmd=h8300-elf-objcopy
-compiler.elf2hex.flags=-O ihex
+compiler.elf2hex.flags=-O srec 
+
+##-O ihex
 
 # Calculate hex size options
 compiler.size.cmd=h8300-elf-size
@@ -64,7 +66,7 @@ recipe.c.combine.pattern="{compiler.path}{compiler.ld.cmd}" {compiler.ld.flags} 
 recipe.objcopy.eep.pattern="{compiler.path}{compiler.elf2bin.cmd}" {compiler.elf2bin.flags} "{build.path}/{build.project_name}.out" "{build.path}/{build.project_name}.bin"
 
 ## Create hex
-recipe.objcopy.hex.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf2hex.flags} "{build.path}/{build.project_name}.out" "{build.path}/{build.project_name}.hex"
+recipe.objcopy.hex.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf2hex.flags} "{build.path}/{build.project_name}.out" "{build.path}/{build.project_name}.mot"
 
 # Compute size
 recipe.size.pattern="{compiler.path}{compiler.size.cmd}" --format=berkeley "{build.path}/{build.project_name}.out"
@@ -72,24 +74,20 @@ recipe.size.pattern="{compiler.path}{compiler.size.cmd}" --format=berkeley "{bui
 
 # Uploader tools
 # -------------------
-tools.openocd.path={runtime.tools.openocd.path}/bin/
-tools.openocd.cmd=openocd
-tools.openocd.program.params.verbose=-v
-tools.openocd.program.params.quiet=-q
-tools.openocd.program.config={runtime.platform.path}/tools/openocd/openocd.cfg
-tools.openocd.program.pattern="{path}{cmd}" -f {program.config} -c "flash protect 0 64 last off; program {build.path}/{build.project_name}.elf verify; resume 0x20400000; exit"
+tools.fdt.path=
+tools.fdt.cmd=fdt.exe
 
-tools.openocd.erase.params.quiet=-q -q
-tools.openocd.erase.params.verbose=-v
-tools.openocd.erase.pattern=
-tools.openocd.bootloader.params.quiet=-q -q
-tools.openocd.bootloader.params.verbose=-v
-tools.openocd.bootloader.config={runtime.platform.path}/tools/openocd/openocd.cfg
-tools.openocd.bootloader.pattern="{path}{cmd}" -f {bootloader.config} -c "flash protect 0 64 last off; program {runtime.platform.path}/bootloader/build/re01_256kb_ek_bootloader.hex verify; resume 0x20400000; exit"
+tools.fdt.program.params.verbose=-v
+tools.fdt.program.params.quiet=-q
+tools.fdt.program.config=
+tools.fdt.program.pattern="{path}{cmd}" {build.path}/{build.project_name}.mot "{upload.verbose}"
 
-tools.manual_openocd.path=
-tools.manual_openocd.cmd=openocd
-tools.manual_openocd.program.params.verbose=-v
-tools.manual_openocd.program.params.quiet=-q
-tools.manual_openocd.program.config={runtime.platform.path}/tools/openocd/openocd.cfg
-tools.manual_openocd.program.pattern="{path}{cmd}" -f {program.config} -c "flash protect 0 64 last off; program {build.path}/{build.project_name}.elf verify; resume 0x20400000; exit"
+
+tools.fdt.upload.params.verbose=-v
+tools.fdt.upload.params.quiet=-q
+tools.fdt.upload.config=
+tools.fdt.upload.pattern="{path}{cmd}" {build.path}/{build.project_name}.mot "{upload.verbose}"
+
+tools.fdt.erase.params.quiet=
+tools.fdt.erase.params.verbose=-v
+tools.fdt.erase.pattern=

@@ -13,7 +13,7 @@
 #include "UartClass.h"
 #include "hwsetup.h"
 
-UARTClass Serial(6,8);
+UARTClass Serial;
 
 int main(void)
 {

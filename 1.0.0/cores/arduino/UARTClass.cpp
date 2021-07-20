@@ -30,6 +30,7 @@ extern "C" {
 #include "rsk2456rdef.h"
 #include "inlines.h"
 
+
 /***********************************************************************************
 Function Name: 	INT_RXI1_SCI_1
 Description:	SCI1 receive interrupt handler.
@@ -66,6 +67,17 @@ void uart_init(unsigned long bauds)
 {
 	unsigned char dummy;
 	
+	/*	Configure port 3 pins as follows -
+	P30		- TXD0			- 1 (UART0 TX pin, configured as output low)
+	P31		- TXD1			- 1 (UART1 TX pin, configured as output low)
+	P32		- RXD0			- 0 (UART0 RX pin, configured as input)
+	P33		- RXD1			- 0 (UART1 RX pin, configured as input)
+	P34		- SCK0_SDA0		- 1 (SSU clock input/output pin, configured as output low)
+	P35		- DLCDRS_SCL0	- 1 (LCD pin, configured as output low) */
+	
+	P3.DR.BYTE = 0x00;	
+	P3.DDR = 0x33;
+
 	/* Disable transmission/reception */
 	/* Clear the bits RIE, TIE,
 	   TEIE, and MPIE, and bits TE and RE to 0 */
@@ -157,7 +169,7 @@ End of function text_write
 
 // Public Methods //////////////////////////////////////////////////////////////
 
-UARTClass::UARTClass(uint8_t Tx_pin, uint8_t Rx_pin)
+UARTClass::UARTClass(void)
 {
 
 }

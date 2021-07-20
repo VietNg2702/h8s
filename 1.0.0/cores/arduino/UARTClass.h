@@ -31,7 +31,7 @@
 class UARTClass : public HardwareSerial
 {
   public:
-    UARTClass(uint8_t Tx_pin, uint8_t Rx_pin);
+    UARTClass(void);
     void begin(unsigned long dwBaudRate);
     void end(void);
     int available(void);
