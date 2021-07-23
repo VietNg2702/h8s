@@ -16,8 +16,8 @@
           "category": "renesas rx family",
           "url": "https://github.com/VietNg2702/h8s/raw/master/h8s_100.zip",
           "archiveFileName": "h8s_100.zip",
-          "checksum": "SHA-256:2f8364278da65f5b3a962c6e3319d36c268da64b2c97087c43d74dec338bcb6f",
-          "size": "185323",
+          "checksum": "SHA-256:713467238116ae9de6870ceaa530446452c1c0a038e8aa24b8d63c48d35de083",
+          "size": "187942",
           "boards": [
             {"name": "H8S"}
           ],
