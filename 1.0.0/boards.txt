@@ -1,4 +1,4 @@
-h8s.name=H8S
+h8s.name=H8S2456
 h8s.menu.toolsloc.default=Default
 h8s.menu.toolsloc.manual=Manual
 h8s.menu.toolsloc.default.compiler.path={runtime.tools.gnuh8-elf.path}/v0902/h8300-elf/bin/
@@ -6,9 +6,9 @@ h8s.menu.toolsloc.manual.compiler.path=
 
 h8s.build.variant=standard
 h8s.build.core=arduino
-h8s.build.board=H8S
-h8s.build.boardenv=H8S
+h8s.build.board=H8S2456
+h8s.build.boardenv=H8S2456
 
-h8s.upload.tool=fdt
-h8s.upload.protocol=H-UDI
+h8s.upload.tool=
+h8s.upload.protocol=
 h8s.upload.params.verbose=

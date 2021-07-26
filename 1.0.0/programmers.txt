@@ -1,9 +1,0 @@
-fdt.name=H8S family
-fdt.communication=usb
-fdt.program.params.verbose=-v
-fdt.program.params.quiet=-q
-fdt.program.tool=fdt
-
-fdt.upload.params.verbose=-v
-fdt.upload.params.quiet=-q
-fdt.upload.tool=fdt

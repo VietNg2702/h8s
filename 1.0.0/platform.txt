@@ -1,4 +1,4 @@
-name=H8S
+name=H8S2456
 version=1.0.0
 
 # Compile tool path
@@ -71,23 +71,3 @@ recipe.objcopy.hex.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf
 # Compute size
 recipe.size.pattern="{compiler.path}{compiler.size.cmd}" --format=berkeley "{build.path}/{build.project_name}.out"
 
-
-# Uploader tools
-# -------------------
-tools.fdt.path=
-tools.fdt.cmd=fdt.exe
-
-tools.fdt.program.params.verbose=-v
-tools.fdt.program.params.quiet=-q
-tools.fdt.program.config=
-tools.fdt.program.pattern="{path}{cmd}" {build.path}/{build.project_name}.mot "{upload.verbose}"
-
-
-tools.fdt.upload.params.verbose=-v
-tools.fdt.upload.params.quiet=-q
-tools.fdt.upload.config=
-tools.fdt.upload.pattern="{path}{cmd}" {build.path}/{build.project_name}.mot "{upload.verbose}"
-
-tools.fdt.erase.params.quiet=
-tools.fdt.erase.params.verbose=-v
-tools.fdt.erase.pattern=

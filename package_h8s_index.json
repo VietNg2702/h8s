@@ -1,7 +1,7 @@
 {
   "packages": [
     {
-      "name": "renesas-rx",
+      "name": "h8s-family",
       "maintainer": "SHCVN",
       "websiteURL": "",
       "email": "",
@@ -13,24 +13,19 @@
           "name": "H8S Boards",
           "architecture": "h8s",
           "version": "1.0.0",
-          "category": "renesas rx family",
+          "category": "h8s family",
           "url": "https://github.com/VietNg2702/h8s/raw/master/h8s_100.zip",
           "archiveFileName": "h8s_100.zip",
-          "checksum": "SHA-256:713467238116ae9de6870ceaa530446452c1c0a038e8aa24b8d63c48d35de083",
-          "size": "187942",
+          "checksum": "SHA-256:b96696ec618066d85d21e63e769937e04c5ca959e0f5b9e609d67db01fdd13f7",
+          "size": "191006",
           "boards": [
-            {"name": "H8S"}
+            {"name": "H8S2456"}
           ],
           "toolsDependencies": [
             {
-              "packager": "renesas-rx", 
+              "packager": "h8s-family", 
               "version": "v0902", 
               "name": "gnuh8-elf"
-            },
-            {
-              "packager": "renesas-rx", 
-              "version": "0.10.0-arduino13", 
-              "name": "openocd"
             }
           ]
         }
@@ -46,19 +41,6 @@
               "archiveFileName": "GNUH8-ELF.zip",
               "checksum": "SHA-256:a7cb108b23cfc8483baddb22811140535d52d4f8b5bfae35b8ecffb66d75ffb1",
               "size": "51285447"
-            }
-            ]
-        },
-        {
-            "name": "openocd",
-            "version": "0.10.0-arduino13",
-            "systems": [
-            {
-              "size": "2334654",
-              "checksum": "SHA-256:2f3b87c644569f47780b16b071cd0929a64a8899ec769f4ca7480d20d5503365",
-              "host": "i686-mingw32",
-              "archiveFileName": "openocd-0.10.0-arduino13-static-i686-w64-mingw32.zip",
-              "url": "http://downloads.arduino.cc/tools/openocd-0.10.0-arduino13-static-i686-w64-mingw32.zip"
             }
             ]
         }
