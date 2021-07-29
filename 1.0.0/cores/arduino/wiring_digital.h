@@ -23,9 +23,6 @@
 extern "C" {
 #endif
 #include "iodefine.h"
-#ifdef __cplusplus    
-}
-#endif
 
 /**
  * \brief Configures the specified pin to behave either as an input or an output. See the description of digital pins for details.
@@ -61,6 +58,8 @@ extern void digitalWrite(char PORT, uint32_t pin, uint32_t val);
  */
 extern int digitalRead(char PORT, uint32_t pin) ;
 
-  
+#ifdef __cplusplus    
+}
+#endif
 
 #endif /* _WIRING_DIGITAL_ */

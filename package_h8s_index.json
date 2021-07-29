@@ -16,8 +16,8 @@
           "category": "h8s family",
           "url": "https://github.com/VietNg2702/h8s/raw/master/h8s_100.zip",
           "archiveFileName": "h8s_100.zip",
-          "checksum": "SHA-256:9947de612ac93145d16667734f09fae41d4b0ad06596cae163f1adfe31ed1928",
-          "size": "191010",
+          "checksum": "SHA-256:ceb73c2f2380f4b1d80b86edf6ecdb1941b556cdc1f7d6d183911ae78a9b15ea",
+          "size": "193576",
           "boards": [
             {"name": "H8S2456"}
           ],

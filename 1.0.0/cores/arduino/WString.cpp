@@ -23,6 +23,7 @@
 #include "itoa.h"
 
 extern "C" {
+#include "avr/dtostrf.h"
 #include "avr/pgmspace.h"
 }
 
@@ -311,7 +312,7 @@ unsigned char String::concat(unsigned long num)
 	return concat(buf, strlen(buf));
 }
 
-#ifdef NOTYET /* XXX Marko FIXME! */
+//#ifdef NOTYET /* XXX Marko FIXME! */
 unsigned char String::concat(float num)
 {
 	char buf[20];
@@ -325,7 +326,7 @@ unsigned char String::concat(double num)
 	char* string = dtostrf(num, 4, 2, buf);
 	return concat(string, strlen(string));
 }
-#endif /* XXX Marko FIXME! */
+//#endif /* XXX Marko FIXME! */
 
 unsigned char String::concat(const __FlashStringHelper * str)
 {

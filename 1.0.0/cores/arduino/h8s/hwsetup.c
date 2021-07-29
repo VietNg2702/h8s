@@ -247,7 +247,7 @@ static void ConfigurePortPins(void)
 	b6		- A22E		- 1 (A22 output when PA6DDR = 1)
 	b7		- A23E		- 1 (A23 output when PA7DDR = 1) */
 	
-	// PFC.PFCR1.BYTE = 0xFF;
+	PFC.PFCR1.BYTE = 0xFF;
 	
 	/* Configure port B pins as follows	
 	PB0		- A(8)		- 1  (Address A8 output) 	

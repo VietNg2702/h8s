@@ -28,7 +28,7 @@
 
 #include "pgmspace.h"
 #include "pins_arduino.h"
-
+#include "variant.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -59,6 +59,7 @@ extern void loop( void ) ;
 #include "WMath.h"
 #include "HardwareSerial.h"
 #include "wiring_pulse.h"
+#include "UARTClass.h"
 #endif
 
 
@@ -67,5 +68,6 @@ extern void loop( void ) ;
 #include "wiring_analog.h"
 #include "wiring_shift.h"
 #include "WInterrupts.h"
+
 
 #endif // Arduino_h

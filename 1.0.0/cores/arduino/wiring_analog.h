@@ -23,13 +23,16 @@
 #include <stdbool.h>
 #include "iodefine.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 /*
  * \brief Writes an analog value (PWM wave) to a pin.
  *
  * \param ulPin
  * \param ulValue
  */
-extern void analogWrite( uint32_t ulPin, uint32_t ulValue ) ;
+extern void analogWrite(char PORT, uint32_t ulPin, uint32_t ulValue ) ;
 
 /*
  * \brief Reads the value from the specified analog pin.
@@ -40,6 +43,8 @@ extern void analogWrite( uint32_t ulPin, uint32_t ulValue ) ;
  */
 extern uint32_t analogRead( uint32_t ulPin ) ;
 
-  
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _WIRING_ANALOG_ */

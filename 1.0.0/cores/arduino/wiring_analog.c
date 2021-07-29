@@ -1,5 +1,36 @@
 #include "Arduino.h"
 #include "wiring_analog.h"
+#include "wiring_digital.h"
+
+static uint8_t state = LOW;
+static char uPORT;
+static uint32_t uPin;
+static uint32_t uValue;
+
+void INT_TGI0B_TPU0(void) 
+{
+	if(state == LOW) state = HIGH;
+	else state = LOW;
+	digitalWrite(uPORT, uPin, state); 
+	TPU0.TGRB = uValue;
+	/* Clear timer interrupt flag */
+	TPU0.TSR.BIT.TGFB = 0;
+}
+
+void analogWrite(char PORT, uint32_t ulPin, uint32_t ulValue )
+{
+	pinMode(PORT, ulPin, OUTPUT);
+	digitalWrite(PORT, ulPin, state);
+	uPORT = PORT;
+	uPin = ulPin;
+	/* Stop the timer */
+	TPU.TSTR.BIT.CST0 = 0x0;
+
+	TPU0.TGRB = ulValue;
+	uValue = ulValue;
+	/* Start the timer */
+	TPU.TSTR.BIT.CST0 = 1;
+}
 
 /* FUNC COMMENT *************************************************************
 * Outline		: ADC_Init
@@ -9,7 +40,7 @@
 * Return value	: none
 * FUNC COMMENT END *********************************************************/
 
-static void ADC_Init(void)
+static void ADC_Init(uint32_t channel)
 {
 	/* ADC conversion start flag. Set to 0 to stop ADC conversion */
 	ADC0.ADCSR.BIT.ADST = 0;
@@ -23,6 +54,7 @@ static void ADC_Init(void)
 	b7			- ADF				- 0	   (AD End Flag) */
 	
 	ADC0.ADCSR.BYTE = 0x00;
+	ADC0.ADCSR.BYTE |= (uint8_t)channel;
 	
 	/* AD Control Register (ADCR_0) Unit 0 
 	b0		- EXTRGS		- 1  (Enables A/D conversion start 
@@ -66,13 +98,13 @@ static uint32_t ADC_Read(void)
     return (uint32_t)usADC_Result;
 }
 
-uint32_t analogRead( uint32_t ulPin )
+uint32_t analogRead(uint32_t ulPin )
 {
-    ADC_Init();
+    ADC_Init(ulPin);
     
     /* On start-up port pin PF0 defaults to input */
 	/* Configure the port pin PF0 as AD trigger pin */
-	PFC.PFCR4.BIT.ADTRG0S = 1;
+	//PFC.PFCR4.BIT.ADTRG0S = 1;
 
     return ADC_Read();
 }

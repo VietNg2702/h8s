@@ -10,14 +10,14 @@ compiler.S.flags=-c -g -x assembler-with-cpp
 
 # Compile c files options
 compiler.c.cmd=h8300-elf-gcc
-compiler.c.flags=-O2  -gdwarf-2 -ms -ms2600 -mint32  -nostartfiles
+compiler.c.flags=-O2  -gdwarf-2 -ms -ms2600 -mint32  -nostartfiles 
 
 # Compile cpp files options
 compiler.cpp.cmd=h8300-elf-c++
-compiler.cpp.flags=-O2  -gdwarf-2 -ms -ms2600 -mint32  -nostartfiles -fno-rtti
+compiler.cpp.flags=-O2  -gdwarf-2 -ms -ms2600 -mint32  -nostartfiles -fno-rtti -fno-use-cxa-atexit
 
 # Compile includes
-compiler.h8s_include="-I{build.system.path}/include" "-I{runtime.platform.path}/variants/standard" "-I{runtime.platform.path}/cores/arduino" "-I{runtime.platform.path}/cores/arduino/avr" "-I{runtime.platform.path}/cores/arduino/h8s" 
+compiler.h8s_include="-I{runtime.platform.path}/variants/standard" "-I{runtime.platform.path}/cores/arduino" "-I{runtime.platform.path}/cores/arduino/avr" "-I{runtime.platform.path}/cores/arduino/h8s" 
 compiler.h8300_include="-I{runtime.tools.gnuh8-elf.path}/v0902/h8300-elf/h8300-elf/include" "-I{runtime.tools.gnuh8-elf.path}/v0902/h8300-elf/lib/gcc/h8300-elf/4.3-GNUH8_v0902/include" "-I{runtime.tools.gnuh8-elf.path}/v0902/h8300-elf/h8300-elf/optlibinc" "-I{runtime.tools.gnuh8-elf.path}/v0902/h8300-elf/lib/gcc/h8300-elf/4.3-GNUH8_v0902/optlibinc"
 
 # Create archives options

@@ -108,12 +108,6 @@ void systick_config(void)
 End of function StartTimer
 ******************************************************************************/
 
-void INT_TGI0B_TPU0(void) 
-{
-	
-	/* Clear timer interrupt flag */
-	TPU0.TSR.BIT.TGFB = 0;
-}
 
 void INT_TGI0A_TPU0(void) 
 {
