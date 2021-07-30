@@ -27,7 +27,7 @@ int incomingByte;      // a variable to read incoming serial data into
 
 void setup() {
   // initialize serial communication:
-  Serial.begin(9600);
+  Serial.begin(BAUD_9600);
   // initialize the LED pin as an output:
   pinMode('6', 3, OUTPUT);
 }

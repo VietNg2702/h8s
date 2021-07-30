@@ -25,7 +25,7 @@
 
 void setup() {
   //start serial connection
-  Serial.begin(9600);
+  Serial.begin(BAUD_9600);
   //configure pin 2 as an input and enable the internal pull-up resistor
   pinMode('6', 1, INPUT_PULLUP); //SW: port 6, pin 1
   pinMode('6', 3, OUTPUT); //LED: port 6, pin 3

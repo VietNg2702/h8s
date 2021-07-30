@@ -22,7 +22,7 @@ const int greenPin = A1;	// sensor to control green color
 const int bluePin = A2;		// sensor to control blue color
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(BAUD_9600);
 }
 
 void loop() {

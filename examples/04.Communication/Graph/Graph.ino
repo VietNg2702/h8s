@@ -29,7 +29,7 @@
 
 void setup() {
   // initialize the serial communication:
-  Serial.begin(9600);
+  Serial.begin(BAUD_9600);
 }
 
 void loop() {

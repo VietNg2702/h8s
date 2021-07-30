@@ -38,7 +38,7 @@ void setup() {
   // initialize the pushbutton pin as an input:
   pinMode('6', 1, INPUT); //port 6, pin 1
   // initialize serial communication:
-  Serial.begin(9600);
+  Serial.begin(BAUD_9600);
 }
 
 

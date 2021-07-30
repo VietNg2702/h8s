@@ -35,7 +35,7 @@ int inputPin = A0;
 
 void setup() {
   // initialize serial communication with computer:
-  Serial.begin(9600);
+  Serial.begin(BAUD_9600);
   // initialize all the readings to 0:
   for (int thisReading = 0; thisReading < numReadings; thisReading++) {
     readings[thisReading] = 0;
